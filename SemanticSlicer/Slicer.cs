@@ -18,7 +18,7 @@ namespace SemanticSlicer
 		static readonly string LINE_ENDING_REPLACEMENT = "\n";
 
 		private SlicerOptions _options;
-		private readonly Tiktoken.Encoding _encoding;
+		private readonly Tiktoken.Encoder _encoding;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Slicer"/> class with optional SemanticSlicer options.
@@ -27,7 +27,7 @@ namespace SemanticSlicer
 		public Slicer(SlicerOptions? options = null)
 		{
 			_options = options ?? new SlicerOptions();
-			_encoding = Tiktoken.Encoding.Get(_options.Encoding);
+			_encoding = Tiktoken.ModelToEncoder.TryFor(_options.Encoding) ?? throw new ArgumentNullException(nameof(Encoding));
 		}
 
 
